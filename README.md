@@ -6,18 +6,11 @@ given a medical condition name, retrieve every ICD-10-CM code from the provided 
 dictionary that represents that condition.
 
 **Public leaderboard: 0.38364 macro-F1.** The code in this repository regenerates the
-submitted predictions exactly. Two SHA-256 digests are valid, and which one you get depends
-only on the line endings your platform writes:
+submitted file byte-for-byte:
 
 ```
-cbf612a12018345fd3984eb582e3bfcce38a370aa255eea60fcd3322bd3d4550   CRLF, 19,651 bytes  (the submitted file)
-02c724cc4622b6cc569da6278dc7a09bda86d4403f2111fb84fdaad9fbbc65a5   LF,   19,627 bytes  (same file on Linux/Kaggle)
+SHA-256  cbf612a12018345fd3984eb582e3bfcce38a370aa255eea60fcd3322bd3d4550
 ```
-
-The two differ by exactly 24 bytes — one per line, across 24 lines — and carry identical
-content: 23 conditions, 2,370 codes. Running `scripts/task3_reproduce.py` on Windows gives
-the first; running the notebook on Kaggle gives the second. **Check against whichever
-matches your platform.**
 
 No model is trained. The system is zero-shot retrieval over pretrained public biomedical
 encoders, so there is nothing to fit and nothing to seed — repeated runs are byte-identical.
@@ -176,8 +169,8 @@ separated by the OS path separator).
 
 ### Fast path — precomputed, seconds
 
-Get the two `.npy` files into `cache/` (download from the latest
-[Release](../../releases/latest), or rebuild — see [cache/README.md](cache/README.md)), then:
+Build the two `.npy` files into `cache/` first — see [cache/README.md](cache/README.md).
+Then:
 
 ```bash
 python scripts/task3_reproduce.py
@@ -196,7 +189,10 @@ sha256sum submission.csv  scripts/submission.csv        # Linux/macOS
 certutil -hashfile scripts\submission.csv SHA256        # Windows
 ```
 
-Match it against the CRLF or LF digest at the top of this file, per your platform.
+> **One caveat on the digest.** `to_csv` writes the platform's native line endings, so the
+> hash above is the Windows (CRLF) form — the submitted file. On Linux and Kaggle the same
+> predictions hash to `02c724cc…65a5`: 19,627 bytes instead of 19,651, differing by exactly
+> one byte per line across 24 lines. Identical content either way.
 
 The notebook additionally writes `submission_check.csv` — its determinism self-check runs
 the whole pipeline a second time and asserts the two files are byte-identical.
@@ -335,21 +331,9 @@ discount the threshold choices accordingly.
 
 ---
 
-## Citation
+## Models
 
-```bibtex
-@misc{cohortx-task-3,
-  title  = {CohortX Task 3: Resolving Medical Conditions to ICD-10-CM Codes},
-  author = {Anas H. Alzahrani and Houcemeddine Turki and Mohamed Ali Hadj Taieb and
-            Abdullah Altammami and Ahmed Nebli and Naveed Aman Pasha and
-            Mohamed Ben Aouicha and Fahad Almsned},
-  year   = {2026},
-  howpublished = {\url{https://kaggle.com/competitions/cohort-x-task-3}},
-  note   = {Kaggle}
-}
-```
-
-Models used: [SapBERT](https://huggingface.co/cambridgeltl/SapBERT-from-PubMedBERT-fulltext),
+[SapBERT](https://huggingface.co/cambridgeltl/SapBERT-from-PubMedBERT-fulltext),
 [BioLORD-2023](https://huggingface.co/FremyCompany/BioLORD-2023),
 [MedCPT-Cross-Encoder](https://huggingface.co/ncbi/MedCPT-Cross-Encoder).
 

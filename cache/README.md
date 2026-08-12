@@ -20,12 +20,8 @@ deterministic NumPy dot products, so the output does not depend on which `torch`
 | `sapbert_icd_titles.npy` | 299 MB | SapBERT CLS embeddings of all 97,441 dictionary titles |
 | `biolord_icd_titles.npy` | 299 MB | BioLORD-2023 mean-pooled embeddings of the same titles |
 
-These exceed GitHub's 100 MB per-file limit. Two ways to get them:
-
-**A. Download** — attached as assets to the repository's latest
-[Release](../../releases/latest). Drop both `.npy` into this folder.
-
-**B. Rebuild** (~1h40m on one CPU thread, no GPU needed):
+These exceed GitHub's 100 MB per-file limit, so they are not committed. Rebuild them into
+this folder (~1h40m on one CPU thread, no GPU needed):
 
 ```bash
 python scripts/export_models.py           # once, needs internet — fetches the 3 encoders
