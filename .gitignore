@@ -1,0 +1,26 @@
+# Large regenerable artifacts — see cache/README.md.
+# Rebuild with: python scripts/build_dict_embeddings.py
+cache/sapbert_icd_titles.npy
+cache/biolord_icd_titles.npy
+
+# Model weights (~1.25 GB) — rebuild with: python scripts/export_models.py
+models/
+
+# Competition data — download from the Kaggle competition's Data tab.
+# Not redistributed here.
+cohort-x-task-3/
+*.xlsx
+
+# Pipeline output
+submission.csv
+submission_check.csv
+sweep_out/
+*.out.ipynb
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.venv*/
+*.egg-info/
+.ipynb_checkpoints/

@@ -1,0 +1,15 @@
+# CPU-only wheels. The +cpu torch build lives on PyTorch's own index.
+--extra-index-url https://download.pytorch.org/whl/cpu
+
+torch==2.13.0+cpu
+transformers==4.57.6
+tokenizers==0.22.2
+numpy==1.26.4
+pandas==2.3.3
+openpyxl==3.1.5
+safetensors==0.8.0
+huggingface-hub==0.36.2
+
+# Only needed to execute the notebook non-interactively (jupyter nbconvert).
+# The pipeline itself does not import it.
+# notebook==7.4.7
